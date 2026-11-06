@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      IKRILI_ENV: development
+      IKRILI_JWT_SECRET: local-development-secret-change-me
+      IKRILI_DATABASE_PATH: /data/ikrili.db
+      IKRILI_MEDIA_PATH: /data/media
+    volumes:
+      - db:/data
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+volumes:
+  db:
+    name: ikrili-production-data

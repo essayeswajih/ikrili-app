@@ -1,0 +1,17 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: ikrili-backend
+    environment:
+      IKRILI_DATABASE_PATH: /data/ikrili.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - db:/data
+    restart: unless-stopped
+
+volumes:
+  db:
+    name: ikrili-sqlite-data
+
